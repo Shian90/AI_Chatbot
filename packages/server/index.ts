@@ -6,7 +6,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("This is bun!!");
+  res.send("This is bun server on root endpoint!!");
+});
+
+app.get("/api/hello", (req: Request, res: Response) => {
+  res.json({ message: "This is json." });
 });
 
 app.listen(port, () => {
