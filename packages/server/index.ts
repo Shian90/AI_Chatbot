@@ -10,7 +10,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get("/api/hello", (req: Request, res: Response) => {
-  res.json({ message: "This is json." });
+  res.json({ message: "This is json from backend." });
 });
 
 app.listen(port, () => {
