@@ -1,6 +1,9 @@
 import express from "express";
 import type { Request, Response } from "express";
 import { pipeline, TextStreamer } from "@huggingface/transformers";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
