@@ -1,7 +1,7 @@
 import express from "express";
 import type { Request, Response } from "express";
-import { pipeline, TextStreamer } from "@huggingface/transformers";
 import dotenv from "dotenv";
+import OpenAI from "openai";
 
 dotenv.config();
 
@@ -15,45 +15,60 @@ app.get("/", (req: Request, res: Response) => {
   res.send("This is bun server on root endpoint!!");
 });
 
-app.get("/api/hello", (req: Request, res: Response) => {
-  res.json({ message: "This is json from backend." });
-});
-
-app.post("/api/chat", async (req: Request, res: Response) => {
-  const { prompt } = req.body;
-
-  // Create a text generation pipeline
-  const generator = await pipeline(
-    "text-generation",
-    "onnx-community/Qwen2.5-Coder-0.5B-Instruct",
-    { dtype: "fp32" }
-  );
-
-  // Define the list of messages
-  const messages = [
-    {
-      role: "user",
-      content: prompt,
-    },
-  ];
-
-  // Create text streamer
-  const streamer = new TextStreamer(generator.tokenizer, {
-    skip_prompt: false,
-    // Optionally, do something with the text (e.g., write to a textbox)
-    // callback_function: (text) => { /* Do something with text */ },
-  });
-
-  // Generate a response
-  const result = await generator(messages, {
-    max_new_tokens: 512,
-    temperature: 0.2,
-    do_sample: false,
-  });
-
-  res.json({ message: result });
-});
-
 app.listen(port, () => {
   console.log(`The server is listening on http://localhost:${port}`);
+});
+
+interface ChatMessage {
+  response_id?: string;
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+const MAX_HISTORY = 20;
+let chatThreadToHistory = new Map<string, ChatMessage[]>();
+
+const remoteModelChat = async (chatThreadId: string, prompt: string) => {
+  const client = new OpenAI({
+    baseURL: "https://router.huggingface.co/v1",
+    apiKey: process.env.HF_TOKEN,
+  });
+
+  let chatHistory: ChatMessage[] | undefined =
+    chatThreadToHistory.get(chatThreadId);
+
+  if (!chatHistory) {
+    chatHistory = [];
+    chatThreadToHistory.set(chatThreadId, chatHistory);
+  }
+
+  chatHistory.push({ role: "user", content: prompt });
+
+  const response = await client.chat.completions.create({
+    model: "google/gemma-2-2b-it",
+    messages: chatHistory,
+    max_completion_tokens: 200,
+  });
+
+  const reply: ChatMessage = {
+    response_id: response.id,
+    role: response.choices[0].message.role,
+    content: response.choices[0].message.content,
+  };
+
+  chatHistory.push(reply);
+
+  if (chatHistory.length > MAX_HISTORY) {
+    chatHistory.splice(0, chatHistory.length - MAX_HISTORY);
+  }
+
+  return reply.content;
+};
+
+app.post("/api/chat", async (req: Request, res: Response) => {
+  const { prompt, chatThreadId } = req.body;
+
+  const reply = await remoteModelChat(chatThreadId, prompt);
+
+  res.json({ message: reply });
 });

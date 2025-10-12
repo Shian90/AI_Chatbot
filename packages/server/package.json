@@ -8,6 +8,7 @@
   "type": "module",
   "private": true,
   "devDependencies": {
+    "@huggingface/inference": "^4.11.1",
     "@huggingface/transformers": "^3.7.5",
     "@types/bun": "latest",
     "@types/express": "^5.0.3",
@@ -17,6 +18,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "openai": "^6.3.0"
   }
 }
