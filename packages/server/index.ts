@@ -2,6 +2,7 @@ import express from "express";
 import type { Request, Response } from "express";
 import dotenv from "dotenv";
 import OpenAI from "openai";
+import z from "zod";
 
 dotenv.config();
 
@@ -47,7 +48,7 @@ const remoteModelChat = async (chatThreadId: string, prompt: string) => {
   const response = await client.chat.completions.create({
     model: "google/gemma-2-2b-it",
     messages: chatHistory,
-    max_completion_tokens: 200,
+    max_tokens: 50,
   });
 
   const reply: ChatMessage = {
@@ -65,7 +66,22 @@ const remoteModelChat = async (chatThreadId: string, prompt: string) => {
   return reply.content;
 };
 
+const reqBodySchema = z.object({
+  prompt: z
+    .string()
+    .trim()
+    .min(1, "Prompt is required.")
+    .max(1000, "Prompt is too long! (Max 1000 characters)."),
+  chatThreadId: z.uuid(),
+});
+
 app.post("/api/chat", async (req: Request, res: Response) => {
+  const parsedReqBody = reqBodySchema.safeParse(req.body);
+  if (!parsedReqBody.success) {
+    res.status(400).json(z.treeifyError(parsedReqBody.error));
+    return;
+  }
+
   const { prompt, chatThreadId } = req.body;
 
   const reply = await remoteModelChat(chatThreadId, prompt);
