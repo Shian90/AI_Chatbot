@@ -1,7 +1,8 @@
-import express from "express";
 import type { Request, Response } from "express";
-import dotenv from "dotenv";
+
 import OpenAI from "openai";
+import dotenv from "dotenv";
+import express from "express";
 import z from "zod";
 
 dotenv.config();
@@ -29,12 +30,12 @@ interface ChatMessage {
 const MAX_HISTORY = 20;
 let chatThreadToHistory = new Map<string, ChatMessage[]>();
 
-const remoteModelChat = async (chatThreadId: string, prompt: string) => {
-  const client = new OpenAI({
-    baseURL: "https://router.huggingface.co/v1",
-    apiKey: process.env.HF_TOKEN,
-  });
+const client = new OpenAI({
+  baseURL: "https://router.huggingface.co/v1",
+  apiKey: process.env.HF_TOKEN,
+});
 
+const remoteModelChat = async (chatThreadId: string, prompt: string) => {
   let chatHistory: ChatMessage[] | undefined =
     chatThreadToHistory.get(chatThreadId);
 
@@ -66,7 +67,7 @@ const remoteModelChat = async (chatThreadId: string, prompt: string) => {
   return reply.content;
 };
 
-const reqBodySchema = z.object({
+const chatReqSchema = z.object({
   prompt: z
     .string()
     .trim()
@@ -76,15 +77,18 @@ const reqBodySchema = z.object({
 });
 
 app.post("/api/chat", async (req: Request, res: Response) => {
-  const parsedReqBody = reqBodySchema.safeParse(req.body);
+  const parsedReqBody = chatReqSchema.safeParse(req.body);
   if (!parsedReqBody.success) {
     res.status(400).json(z.treeifyError(parsedReqBody.error));
     return;
   }
 
-  const { prompt, chatThreadId } = req.body;
+  try {
+    const { prompt, chatThreadId } = req.body;
+    const reply = await remoteModelChat(chatThreadId, prompt);
 
-  const reply = await remoteModelChat(chatThreadId, prompt);
-
-  res.json({ message: reply });
+    res.json({ message: reply });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to generate response." });
+  }
 });
