@@ -1,8 +1,8 @@
-export interface ChatMessage {
+export type ChatMessage = {
   response_id?: string;
   role: "system" | "user" | "assistant";
   content: string;
-}
+};
 
 const MAX_HISTORY = 20;
 let chatThreadToHistory = new Map<string, ChatMessage[]>();
