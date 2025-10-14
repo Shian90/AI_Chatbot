@@ -1,3 +1,5 @@
+// Data access code
+
 export type ChatMessage = {
   response_id?: string;
   role: "system" | "user" | "assistant";

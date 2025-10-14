@@ -1,3 +1,5 @@
+// Gateway to different services
+
 import type { Request, Response } from "express";
 
 import { chatService } from "../services/chat.service";

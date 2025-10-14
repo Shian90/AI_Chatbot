@@ -1,3 +1,5 @@
+// Application logic code
+
 import OpenAI from "openai";
 import { chatHistoryRepository, type ChatMessage } from "../repositories/chat.repository";
 
