@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 
 import { Button } from "./ui/button";
 import { FaArrowUp } from "react-icons/fa";
+import ReactMarkdown from "react-markdown";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
@@ -20,27 +21,26 @@ type ChatResponse = {
 };
 
 const ChatBot = () => {
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const chatThreadId = useRef(crypto.randomUUID());
 
   const { handleSubmit, register, reset, formState } = useForm<FormData>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (formData: FormData) => {
     reset();
 
-    setMessages((prev) => [...prev, data.prompt]);
+    const userMessage: ChatMessage = { role: "user", content: formData.prompt };
+    setMessages((prev) => [...prev, userMessage]);
 
     try {
       const reqBody = {
-        prompt: data.prompt,
+        prompt: formData.prompt,
         chatThreadId: chatThreadId.current,
       };
 
       const response = await axios.post<ChatResponse>("/api/chat", reqBody);
 
-      console.log(response.data.message.content);
-
-      setMessages((prev) => [...prev, response.data.message.content]);
+      setMessages((prev) => [...prev, response.data.message]);
     } catch (error) {
       console.log(error);
     }
@@ -55,11 +55,17 @@ const ChatBot = () => {
 
   return (
     <div>
-      <div>
+      <div className="flex flex-col gap-8 mb-10">
         {messages.map((message, index) => (
-          <p key={index} className="text-white">
-            {message}
-          </p>
+          <div
+            key={index}
+            className={`text-white rounded-3xl px-4 py-2  ${
+              message.role === "user"
+                ? "bg-[#477070e2] self-end border-2 border-gray-600"
+                : "bg-[#477070e2] border-0 border-gray-600 self-start"
+            }`}>
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          </div>
         ))}
       </div>
       <form
