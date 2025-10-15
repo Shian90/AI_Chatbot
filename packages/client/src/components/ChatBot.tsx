@@ -9,8 +9,14 @@ type FormData = {
   prompt: string;
 };
 
+type ChatMessage = {
+  response_id?: string;
+  role: "system" | "user" | "assistant";
+  content: string;
+};
+
 type ChatResponse = {
-  message: string;
+  message: ChatMessage;
 };
 
 const ChatBot = () => {
@@ -32,9 +38,9 @@ const ChatBot = () => {
 
       const response = await axios.post<ChatResponse>("/api/chat", reqBody);
 
-      console.log(response.data.message);
+      console.log(response.data.message.content);
 
-      setMessages((prev) => [...prev, response.data.message]);
+      setMessages((prev) => [...prev, response.data.message.content]);
     } catch (error) {
       console.log(error);
     }
