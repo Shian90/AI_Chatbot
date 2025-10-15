@@ -23,7 +23,7 @@ class ChatController {
       const { prompt, chatThreadId } = req.body;
       const reply = await chatService.sendMessage(chatThreadId, prompt);
 
-      res.json({ message: reply.content });
+      res.json({ message: reply });
     } catch (error) {
       res.status(500).json({ error: "Failed to generate response." + error });
     }
