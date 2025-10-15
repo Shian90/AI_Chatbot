@@ -118,3 +118,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+body,
+#root {
+  background-color: rgb(7, 3, 30);
+}
