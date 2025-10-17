@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Button } from "./ui/button";
 import { FaArrowUp } from "react-icons/fa";
@@ -25,6 +25,11 @@ const ChatBot = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const chatThreadId = useRef(crypto.randomUUID());
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const { handleSubmit, register, reset, formState } = useForm<FormData>();
 
@@ -57,30 +62,40 @@ const ChatBot = () => {
     }
   };
 
+  const onCopyMessage = (e: React.ClipboardEvent) => {
+    const selectedMessage = window.getSelection()?.toString().trim();
+    if (selectedMessage) {
+      e.preventDefault();
+      e.clipboardData.setData("text/plain", selectedMessage);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col gap-8 mb-10">
         {messages.map((message, index) => (
-          <div
+          <p
             key={index}
-            className={`bg-[#477070e2] text-white rounded-3xl px-4 py-2  ${
-              message.role === "user" ? "self-end border-2 border-gray-600" : " border-0 border-gray-600 self-start"
+            onCopy={onCopyMessage}
+            className={`bg-[#477070e2] text-white rounded-3xl px-3 py-2 ${
+              message.role === "user" ? "self-end" : "self-start"
             }`}>
             <ReactMarkdown>{message.content}</ReactMarkdown>
-          </div>
+          </p>
         ))}
         {isLoading && (
-          <div className="flex text-gray-400 px-4 py-2 items-end">
+          <div className="flex text-gray-400 px-3 py-2 items-end">
             Thinking
-            <div className="w-1 h-1 rounded-3xl bg-gray-400 animate-pulse"></div>
-            <div className="w-1 h-1 rounded-3xl bg-gray-400 animate-pulse [animation-delay: 0.2s]"></div>
-            <div className="w-1 h-1 rounded-3xl bg-gray-400 animate-pulse [animation-delay: 0.4s]"></div>
+            <div className="w-1 h-1 rounded-3xl bg-gray-400 animate-pulse mb-1"></div>
+            <div className="w-1 h-1 rounded-3xl bg-gray-400 animate-pulse [animation-delay: 0.2s] mb-1"></div>
+            <div className="w-1 h-1 rounded-3xl bg-gray-400 animate-pulse [animation-delay: 0.4s] mb-1"></div>
           </div>
         )}
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={onEnterKeySubmit}
+        ref={formRef}
         className="flex flex-col border-2 border-gray-400 items-end p-4 rounded-3xl">
         <textarea
           {...register("prompt", { required: true, validate: (data) => data.trim().length > 0 })}
