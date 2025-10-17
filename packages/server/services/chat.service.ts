@@ -18,7 +18,6 @@ class ChatService {
     const response: OpenAI.Chat.Completions.ChatCompletion = await client.chat.completions.create({
       model: "google/gemma-2-2b-it",
       messages: chatHistoryRepository.getChatHistory(chatThreadId),
-      max_tokens: 100,
     });
 
     const modelReplyMessage: ChatMessage = {
