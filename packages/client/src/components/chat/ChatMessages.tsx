@@ -28,19 +28,21 @@ const ChatMessages = ({ messages }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <>
       {messages.map((message, index) => (
         <div
           key={index}
           onCopy={onCopyMessage}
           ref={index === messages.length - 1 ? lastMessageRef : null}
-          className={`max-w-[66%] bg-[#1b567592] text-white rounded-3xl px-3 py-2 ${
-            message.role === "user" ? "self-end" : "self-start"
+          className={`text-white px-3 py-2 ${
+            message.role === "user"
+              ? "bg-user-message max-w-[66%] self-end rounded-3xl"
+              : "bg-assistant-message w-full self-start rounded-none"
           }`}>
           <ReactMarkdown>{message.content}</ReactMarkdown>
         </div>
       ))}
-    </div>
+    </>
   );
 };
 
