@@ -45,7 +45,7 @@ const ChatBot = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex flex-col flex-1 mb-5 overflow-y-auto">
+      <div className="custom-scroll flex flex-col flex-1 mb-5 overflow-y-auto px-3">
         <ChatMessages messages={messages} />
         {isLoading && <TypingIndicator />}
         {error && <p className="text-red-500 p-4">{error}</p>}
