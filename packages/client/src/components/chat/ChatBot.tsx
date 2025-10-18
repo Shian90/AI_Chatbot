@@ -1,20 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Button } from "../ui/button";
+import type { ChatMessage } from "./ChatMessages";
+import ChatMessages from "./ChatMessages";
 import { FaArrowUp } from "react-icons/fa";
-import ReactMarkdown from "react-markdown";
 import TypingIndicator from "./TypingIndicator";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
 type FormData = {
   prompt: string;
-};
-
-type ChatMessage = {
-  response_id?: string;
-  role: "system" | "user" | "assistant";
-  content: string;
 };
 
 type ChatResponse = {
@@ -27,11 +22,6 @@ const ChatBot = () => {
   const [error, setError] = useState("");
 
   const chatThreadId = useRef(crypto.randomUUID());
-  const lastMessageRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
 
   const { handleSubmit, register, reset, formState } = useForm<FormData>();
 
@@ -44,6 +34,7 @@ const ChatBot = () => {
       setMessages((prev) => [...prev, userMessage]);
 
       setIsLoading(true);
+
       const reqBody = {
         prompt: formData.prompt,
         chatThreadId: chatThreadId.current,
@@ -67,28 +58,10 @@ const ChatBot = () => {
     }
   };
 
-  const onCopyMessage = (e: React.ClipboardEvent) => {
-    const selectedMessage = window.getSelection()?.toString().trim();
-    if (selectedMessage) {
-      e.preventDefault();
-      e.clipboardData.setData("text/plain", selectedMessage);
-    }
-  };
-
   return (
     <div className="flex flex-col h-full">
-      <div className="flex flex-col flex-1 gap-8 mb-10 overflow-y-auto">
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            onCopy={onCopyMessage}
-            ref={index === messages.length - 1 ? lastMessageRef : null}
-            className={`bg-[#477070e2] text-white rounded-3xl px-3 py-2 ${
-              message.role === "user" ? "self-end" : "self-start"
-            }`}>
-            <ReactMarkdown>{message.content}</ReactMarkdown>
-          </div>
-        ))}
+      <div className="flex flex-col flex-1 mb-10 overflow-y-auto">
+        <ChatMessages messages={messages} />
         {isLoading && <TypingIndicator />}
         {error && <p className="text-red-500 p-4">{error}</p>}
       </div>

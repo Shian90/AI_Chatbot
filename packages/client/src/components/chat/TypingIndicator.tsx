@@ -1,5 +1,3 @@
-import React from "react";
-
 const TypingIndicator = () => {
   return (
     <div className="flex text-gray-400 px-3 py-2 items-end">
