@@ -6,10 +6,14 @@ import type { ChatMessage } from "./ChatMessages";
 import ChatMessages from "./ChatMessages";
 import TypingIndicator from "./TypingIndicator";
 import axios from "axios";
+import popSound from "@/assets/sounds/pop.mp3";
 
 type ChatResponse = {
   message: ChatMessage;
 };
+
+const popAudio = new Audio(popSound);
+popAudio.volume = 0.5;
 
 const ChatBot = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -25,6 +29,8 @@ const ChatBot = () => {
       const userMessage: ChatMessage = { role: "user", content: formData.prompt };
       setMessages((prev) => [...prev, userMessage]);
 
+      popAudio.play();
+
       setIsLoading(true);
 
       const reqBody = {
@@ -35,6 +41,7 @@ const ChatBot = () => {
       const response = await axios.post<ChatResponse>("/api/chat", reqBody);
 
       setMessages((prev) => [...prev, response.data.message]);
+      popAudio.play();
     } catch (error) {
       console.error(error);
       setError("Something went wrong, try again!");
