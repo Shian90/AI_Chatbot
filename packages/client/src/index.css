@@ -42,6 +42,7 @@
   --color-message-color: var(--message-color);
   --color-user-message: var(--user-message);
   --color-assistant-message: var(--assistant-message);
+  --color-select-item: var(--select-item);
 }
 
 /*
@@ -106,6 +107,7 @@
   --message-color: oklch(92.8% 0.006 264.531);
   --user-message: oklch(38.571% 0.06749 236.172 / 0.645);
   --assistant-message: oklch(49.665% 0.01426 290.908 / 0.3);
+  --select-item: oklch(44.605% 0.01303 291.536 / 0.3);
 }
 
 .dark {

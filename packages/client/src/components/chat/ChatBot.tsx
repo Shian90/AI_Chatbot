@@ -2,8 +2,7 @@ import { useRef, useState } from "react";
 
 import type { ChatFormData } from "./ChatInput";
 import ChatInput from "./ChatInput";
-import type { ChatMessage } from "./ChatMessages";
-import ChatMessages from "./ChatMessages";
+import ChatMessages, { type ChatMessage } from "./ChatMessages";
 import Sidebar from "./Sidebar";
 import TypingIndicator from "./TypingIndicator";
 import axios from "axios";
@@ -53,7 +52,7 @@ const ChatBot = () => {
 
   return (
     <div className="flex h-full">
-      <Sidebar />
+      <Sidebar title={messages.length > 0 ? messages[0].content : "New Thread"} />
       <div className="w-px h-full bg-assistant-message"></div>
       <div className="flex flex-1 flex-col h-full p-4">
         <div className="sticky text-white w-fit rounded-2xl">
