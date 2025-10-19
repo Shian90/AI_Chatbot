@@ -30,15 +30,20 @@ const ChatInput = ({ onSubmit: fnOnSubmit }: Props) => {
     <form
       onSubmit={onSubmit}
       onKeyDown={onEnterKeySubmit}
-      className="flex flex-col border-2 border-gray-400 items-end p-4 rounded-3xl w-[50%] self-center">
+      className="flex flex-col border-2 border-message-color items-end p-4 rounded-3xl w-[50%] self-center">
       <textarea
         {...register("prompt", { required: true, validate: (data) => data.trim().length > 0 })}
-        className="w-full resize-none focus:outline-0 text-white"
+        className="w-full resize-none focus:outline-0 text-message-color"
         autoFocus
         placeholder="Ask anything"
         maxLength={1000}
       />
-      <Button disabled={!formState.isValid} type="submit" variant="outline" size="icon" className="rounded-full">
+      <Button
+        disabled={!formState.isValid}
+        type="submit"
+        variant="outline"
+        size="icon"
+        className="bg-message-color rounded-full">
         <FaArrowUp />
       </Button>
     </form>

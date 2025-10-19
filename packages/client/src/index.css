@@ -10,7 +10,7 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
+  --color-button-hover: var(--button-hover);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
@@ -39,6 +39,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-message-color: var(--message-color);
   --color-user-message: var(--user-message);
   --color-assistant-message: var(--assistant-message);
 }
@@ -71,9 +72,9 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(27.3% 0.03605 263.716);
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --button-hover: oklch(42.377% 0.07436 235.604 / 0.645);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
@@ -96,20 +97,21 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary: oklch(25.585% 0.03713 261.767);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --user-message: #1b567592;
-  --assistant-message: rgba(57, 55, 66, 0.27);
+  --message-color: oklch(92.8% 0.006 264.531);
+  --user-message: oklch(38.571% 0.06749 236.172 / 0.645);
+  --assistant-message: oklch(49.665% 0.01426 290.908 / 0.3);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --background: oklch(27.3% 0.03605 263.716);
+  --foreground: oklch(27.3% 0.03605 263.716);
+  --button-hover: oklch(42.377% 0.07436 235.604 / 0.645);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -138,8 +140,9 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-  --user-message: #1b567592;
-  --assistant-message: rgba(57, 55, 66, 0.27);
+  --message-color: oklch(92.8% 0.006 264.531);
+  --user-message: oklch(38.571% 0.06749 236.172 / 0.573);
+  --assistant-message: oklch(49.665% 0.01426 290.908 / 0.3);
 }
 
 @layer base {
@@ -149,9 +152,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-body,
-#root {
-  background-color: rgb(7, 3, 35);
 }
