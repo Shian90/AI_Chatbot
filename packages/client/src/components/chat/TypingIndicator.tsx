@@ -1,6 +1,6 @@
 const TypingIndicator = () => {
   return (
-    <div className="flex text-gray-400 px-3 py-2 items-end">
+    <div className="flex text-gray-400 px-3 py-2 self-start items-end">
       <span className="animate-pulse">Thinking</span>
       <Dot className="[animation-delay: 0.2s]" />
       <Dot className="[animation-delay: 0.4s]" />

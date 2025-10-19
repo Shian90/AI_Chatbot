@@ -58,12 +58,10 @@ const ChatBot = () => {
         <div className="sticky text-white w-fit rounded-2xl">
           <h1 className="text-xl text-white">ChatBot</h1>
         </div>
-        <div className="custom-scroll flex flex-col flex-1 mb-5 overflow-y-auto px-3 items-center">
-          <div className="flex flex-col gap-5 w-[50%]">
-            <ChatMessages messages={messages} />
-            {isLoading && <TypingIndicator />}
-            {error && <p className="text-red-500 p-4">{error}</p>}
-          </div>
+        <div className="flex flex-col flex-1 gap-5 px-3 self-center w-[66%] items-center overflow-y-auto custom-scroll">
+          <ChatMessages messages={messages} />
+          {isLoading && <TypingIndicator />}
+          {error && <p className="text-red-500 p-4 self-start">{error}</p>}
         </div>
         <ChatInput onSubmit={onSubmit} />
       </div>
