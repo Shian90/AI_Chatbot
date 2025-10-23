@@ -9,15 +9,15 @@ const client: OpenAI = new OpenAI({
 });
 
 class ChatService {
-  async sendMessage(chatThreadId: string, prompt: string): Promise<ChatMessage> {
-    chatHistoryRepository.addChatMessageToHistory(chatThreadId, {
+  async sendMessage(chatThreadID: string, prompt: string): Promise<ChatMessage> {
+    chatHistoryRepository.addChatMessageToHistory(chatThreadID, {
       role: "user",
       content: prompt,
     });
 
     const response: OpenAI.Chat.Completions.ChatCompletion = await client.chat.completions.create({
       model: "google/gemma-2-2b-it",
-      messages: chatHistoryRepository.getChatHistory(chatThreadId),
+      messages: chatHistoryRepository.getChatHistory(chatThreadID),
     });
 
     const modelReplyMessage: ChatMessage = {
@@ -26,9 +26,17 @@ class ChatService {
       content: response.choices[0]?.message.content ?? "",
     };
 
-    chatHistoryRepository.addChatMessageToHistory(chatThreadId, modelReplyMessage);
+    chatHistoryRepository.addChatMessageToHistory(chatThreadID, modelReplyMessage);
 
     return modelReplyMessage;
+  }
+
+  async getAllchatThreadIDs(): Promise<string[]> {
+    return await chatHistoryRepository.getAllchatThreadIDs();
+  }
+
+  async getChatHistory(chatThreadID: string): Promise<ChatMessage[]> {
+    return await chatHistoryRepository.getChatHistory(chatThreadID);
   }
 }
 
