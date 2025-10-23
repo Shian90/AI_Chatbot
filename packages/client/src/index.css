@@ -44,6 +44,7 @@
   --color-user-message: var(--user-message);
   --color-assistant-message: var(--assistant-message);
   --color-control-color: var(--control-color);
+  --color-control-hover-color: var(--control-hover-color);
 }
 
 /*
@@ -110,6 +111,7 @@
   --user-message: oklch(38.571% 0.06749 236.172 / 0.645);
   --assistant-message: oklch(49.665% 0.01426 290.908 / 0.3);
   --control-color: rgb(160, 207, 100);
+  --control-hover-color: rgb(184, 236, 115);
 }
 
 .dark {
@@ -149,6 +151,7 @@
   --user-message: oklch(38.571% 0.06749 236.172 / 0.573);
   --assistant-message: oklch(49.665% 0.01426 290.908 / 0.3);
   --control-color: rgb(160, 207, 100);
+  --control-hover-color: rgb(184, 236, 115);
 }
 
 @layer base {

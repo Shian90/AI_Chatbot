@@ -1,24 +1,69 @@
-import { Button } from "../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-type Props = {
+import { Button } from "../ui/button";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+export type ChatThread = {
+  chatThreadID: string;
   title: string;
 };
 
-const Sidebar = ({ title }: Props) => {
+const Sidebar = () => {
   const [selected, setSelected] = useState(false);
+  const [chatThreads, setChatThreads] = useState<ChatThread[]>([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchChatThreads = async () => {
+      try {
+        const response = await axios.get("api/chat");
+        const chatThreads: ChatThread[] = response.data.chatThreads;
+
+        setChatThreads(chatThreads);
+        console.log(chatThreads);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchChatThreads();
+  }, []);
+
+  const onClick = (chatThreadID: string, newChatButton: boolean) => {
+    if (newChatButton) {
+      const newThreadAlreadyExists: boolean = chatThreads.findIndex((data: ChatThread) => data.title === "") !== -1;
+
+      if (!newThreadAlreadyExists) setChatThreads((prev) => [...prev, { chatThreadID: chatThreadID, title: "" }]);
+    }
+
+    navigate(`/chat/${chatThreadID}`);
+  };
 
   return (
-    <div className="flex flex-col gap-2 p-2 w-[15%] bg-sidebar-primary overflow-y-auto custom-scroll">
-      <Button className="hover:bg-button-hover bg-control-color text-md text-background my-2">+ New Chat</Button>
+    <div className="flex flex-col h-full gap-2 p-2 w-[15%] bg-sidebar-primary overflow-y-auto custom-scroll">
+      <Button
+        onClick={() => {
+          onClick(crypto.randomUUID(), true);
+        }}
+        className="hover:bg-control-hover-color bg-control-color text-md text-background my-2">
+        + New Chat
+      </Button>
       <hr className="border-assistant-message border-1"></hr>
-      <div
-        onClick={() => setSelected(!selected)}
-        className={`${
-          selected ? "bg-select-item hover:bg-none" : "bg-none hover:bg-assistant-message"
-        } px-3 py-2 text-md text-message-color rounded-lg`}>
-        {title}
-      </div>
+
+      {chatThreads.map((chatThread: ChatThread) => {
+        return (
+          <div
+            key={chatThread.chatThreadID}
+            onClick={() => onClick(chatThread.chatThreadID, false)}
+            className={`${
+              selected ? "bg-select-item hover:bg-none" : "bg-none hover:bg-assistant-message"
+            } px-3 py-2 text-md text-message-color rounded-lg`}>
+            {chatThread.title === "" ? "New Thread" : chatThread.title}
+          </div>
+        );
+      })}
     </div>
   );
 };

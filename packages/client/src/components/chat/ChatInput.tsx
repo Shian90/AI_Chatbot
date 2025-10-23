@@ -30,7 +30,7 @@ const ChatInput = ({ onSubmit: fnOnSubmit }: Props) => {
     <form
       onSubmit={onSubmit}
       onKeyDown={onEnterKeySubmit}
-      className="flex flex-col border-2 border-message-color items-end p-4 rounded-3xl w-[66%] self-center">
+      className="sticky flex flex-col border-2 border-message-color items-end p-4 rounded-3xl w-[66%] self-center">
       <textarea
         {...register("prompt", { required: true, validate: (data) => data.trim().length > 0 })}
         className="w-full resize-none focus:outline-0 text-message-color custom-scroll"
@@ -41,10 +41,9 @@ const ChatInput = ({ onSubmit: fnOnSubmit }: Props) => {
       <Button
         disabled={!formState.isValid}
         type="submit"
-        variant="outline"
         size="icon"
-        className="bg-control-color rounded-full">
-        <FaArrowUp />
+        className="bg-control-color hover:bg-control-hover-color rounded-full">
+        <FaArrowUp color="#1e2739" />
       </Button>
     </form>
   );
