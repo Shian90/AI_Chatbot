@@ -38,7 +38,7 @@ const ChatMessages = ({ messages }: Props) => {
             message.role === "user"
               ? "bg-user-message max-w-[66%] self-end rounded-3xl"
               : "bg-assistant-message w-full self-start rounded-xl"
-          }`}>
+          } ${index == messages.length - 1 ? "mb-5" : "mb-0"}`}>
           <ReactMarkdown>{message.content}</ReactMarkdown>
         </div>
       ))}

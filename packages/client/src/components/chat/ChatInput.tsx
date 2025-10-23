@@ -30,7 +30,7 @@ const ChatInput = ({ onSubmit: fnOnSubmit }: Props) => {
     <form
       onSubmit={onSubmit}
       onKeyDown={onEnterKeySubmit}
-      className="sticky flex flex-col border-2 border-message-color items-end p-4 rounded-3xl w-[66%] self-center">
+      className="flex flex-col border-2 border-message-color items-end p-4 rounded-3xl w-[66%] self-center">
       <textarea
         {...register("prompt", { required: true, validate: (data) => data.trim().length > 0 })}
         className="w-full resize-none focus:outline-0 text-message-color custom-scroll"

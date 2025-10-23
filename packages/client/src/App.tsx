@@ -9,7 +9,14 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<ChatBot />} /> */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<div className="conversation-area">Select a chat to begin.</div>} />
+          <Route
+            index
+            element={
+              <div className="flex flex-col items-center justify-center text-gray-500 text-3xl font-bold h-full">
+                Select a chat to begin.
+              </div>
+            }
+          />
           <Route path="/chat/:chatThreadID" element={<ChatBot />} />
         </Route>
       </Routes>

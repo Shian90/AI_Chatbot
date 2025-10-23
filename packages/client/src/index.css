@@ -107,51 +107,14 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --select-item: oklch(44.605% 0.01303 291.536 / 0.3);
-  --message-color: oklch(92.8% 0.006 264.531);
-  --user-message: oklch(38.571% 0.06749 236.172 / 0.645);
+  --message-color: oklch(86.309% 0.00477 258.595);
+  --user-message: oklch(40.99% 0.07224 235.701 / 0.645);
   --assistant-message: oklch(49.665% 0.01426 290.908 / 0.3);
   --control-color: rgb(160, 207, 100);
   --control-hover-color: rgb(184, 236, 115);
 }
 
 .dark {
-  --background: oklch(27.3% 0.03605 263.716);
-  --foreground: oklch(27.3% 0.03605 263.716);
-  --button-hover: oklch(42.377% 0.07436 235.604 / 0.645);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-  --select-item: oklch(44.605% 0.01303 291.536 / 0.3);
-  --message-color: oklch(92.8% 0.006 264.531);
-  --user-message: oklch(38.571% 0.06749 236.172 / 0.573);
-  --assistant-message: oklch(49.665% 0.01426 290.908 / 0.3);
-  --control-color: rgb(160, 207, 100);
-  --control-hover-color: rgb(184, 236, 115);
 }
 
 @layer base {

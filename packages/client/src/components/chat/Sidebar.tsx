@@ -59,7 +59,7 @@ const Sidebar = () => {
             onClick={() => onClick(chatThread.chatThreadID, false)}
             className={`${
               selected ? "bg-select-item hover:bg-none" : "bg-none hover:bg-assistant-message"
-            } px-3 py-2 text-md text-message-color rounded-lg`}>
+            } px-3 py-2 text-md truncate text-message-color rounded-lg`}>
             {chatThread.title === "" ? "New Thread" : chatThread.title}
           </div>
         );
