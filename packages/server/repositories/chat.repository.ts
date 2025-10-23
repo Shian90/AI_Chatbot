@@ -6,20 +6,34 @@ export type ChatMessage = {
   content: string;
 };
 
+export type ChatThread = {
+  chatThreadID: string;
+  title: string;
+};
+
 const MAX_HISTORY = 20;
 let chatThreadToHistory = new Map<string, ChatMessage[]>();
 
 class ChatHistoryRepository {
-  getAllchatThreadIDs(): string[] {
-    return [...chatThreadToHistory.keys()];
+  getAllchatThreadIDs(): ChatThread[] {
+    const chatThreads: ChatThread[] = [];
+    chatThreadToHistory.forEach((messages: ChatMessage[], chatThreadID: string) => {
+      chatThreads.push({ chatThreadID: chatThreadID, title: messages[0]?.content.trim().replace(".", "") ?? "" });
+    });
+
+    return chatThreads;
   }
 
   getChatHistory(chatThreadID: string): ChatMessage[] {
     let chatHistory: ChatMessage[] | undefined = chatThreadToHistory.get(chatThreadID);
 
     if (!chatHistory) {
+      const isEmptyHistoryExists =
+        chatThreadToHistory.values().find((chatHistory: ChatMessage[]) => chatHistory.length == 0) !== undefined;
       chatHistory = [];
-      chatThreadToHistory.set(chatThreadID, chatHistory);
+      if (!isEmptyHistoryExists) {
+        chatThreadToHistory.set(chatThreadID, chatHistory);
+      }
     }
 
     return chatHistory;

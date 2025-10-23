@@ -1,7 +1,7 @@
 // Application logic code
 
 import OpenAI from "openai";
-import { chatHistoryRepository, type ChatMessage } from "../repositories/chat.repository";
+import { chatHistoryRepository, type ChatMessage, type ChatThread } from "../repositories/chat.repository";
 
 const client: OpenAI = new OpenAI({
   baseURL: "https://router.huggingface.co/v1",
@@ -31,7 +31,7 @@ class ChatService {
     return modelReplyMessage;
   }
 
-  async getAllchatThreadIDs(): Promise<string[]> {
+  async getAllchatThreadIDs(): Promise<ChatThread[]> {
     return await chatHistoryRepository.getAllchatThreadIDs();
   }
 

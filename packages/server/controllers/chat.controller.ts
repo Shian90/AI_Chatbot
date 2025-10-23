@@ -1,8 +1,8 @@
 // Gateway to different services
 
+import type { ChatMessage, ChatThread } from "../repositories/chat.repository";
 import type { Request, Response } from "express";
 
-import type { ChatMessage } from "../repositories/chat.repository";
 import { chatService } from "../services/chat.service";
 import z from "zod";
 
@@ -32,8 +32,8 @@ class ChatController {
 
   async getAllchatThreadIDs(req: Request, res: Response) {
     try {
-      const allchatThreadIDs: string[] = await chatService.getAllchatThreadIDs();
-      res.json({ chatThreadIDs: allchatThreadIDs });
+      const allChatThreads: ChatThread[] = await chatService.getAllchatThreadIDs();
+      res.json({ chatThreads: allChatThreads });
     } catch (error) {
       res.status(500).json({ error: "Failed to load chats. " + error });
     }
