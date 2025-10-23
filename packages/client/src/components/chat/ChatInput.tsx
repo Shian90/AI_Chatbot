@@ -43,7 +43,7 @@ const ChatInput = ({ onSubmit: fnOnSubmit }: Props) => {
         type="submit"
         variant="outline"
         size="icon"
-        className="bg-message-color rounded-full">
+        className="bg-control-color rounded-full">
         <FaArrowUp />
       </Button>
     </form>
