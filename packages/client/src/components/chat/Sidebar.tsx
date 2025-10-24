@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../ui/button";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export type ChatThread = {
   chatThreadID: string;
@@ -10,9 +10,9 @@ export type ChatThread = {
 };
 
 const Sidebar = () => {
-  const [selected, setSelected] = useState(false);
   const [chatThreads, setChatThreads] = useState<ChatThread[]>([]);
 
+  const { chatThreadID } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,12 +53,13 @@ const Sidebar = () => {
       <hr className="border-assistant-message border-1"></hr>
 
       {chatThreads.map((chatThread: ChatThread) => {
+        const isActive = chatThreadID === chatThread.chatThreadID;
         return (
           <div
             key={chatThread.chatThreadID}
             onClick={() => onClick(chatThread.chatThreadID, false)}
             className={`${
-              selected ? "bg-select-item hover:bg-none" : "bg-none hover:bg-assistant-message"
+              isActive ? "bg-select-item hover:bg-none" : "bg-none hover:bg-assistant-message"
             } px-3 py-2 text-md truncate text-message-color rounded-lg`}>
             {chatThread.title === "" ? "New Thread" : chatThread.title}
           </div>
