@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "../ui/button";
 import axios from "axios";
+import { useEffect } from "react";
 
 export type ChatThread = {
   chatThreadID: string;
   title: string;
 };
 
-const Sidebar = () => {
-  const [chatThreads, setChatThreads] = useState<ChatThread[]>([]);
+type SidebarProps = {
+  chatThreads: ChatThread[];
+  setChatThreads: React.Dispatch<React.SetStateAction<ChatThread[]>>;
+};
 
+const Sidebar = ({ chatThreads, setChatThreads }: SidebarProps) => {
   const { chatThreadID } = useParams();
   const navigate = useNavigate();
 

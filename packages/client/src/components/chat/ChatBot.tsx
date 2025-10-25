@@ -6,11 +6,16 @@ import ChatMessages, { type ChatMessage } from "./ChatMessages";
 import TypingIndicator from "./TypingIndicator";
 import axios from "axios";
 import popSound from "@/assets/sounds/pop.mp3";
-import { useParams } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import { useOutletContext, useParams } from "react-router-dom";
+import type { ChatThread } from "./Sidebar";
 
 type ChatResponse = {
   message: ChatMessage;
+};
+
+type OutletContext = {
+  chatThreads: ChatThread[];
+  setChatThreads: React.Dispatch<React.SetStateAction<ChatThread[]>>;
 };
 
 const popAudio = new Audio(popSound);
@@ -22,23 +27,21 @@ const ChatBot = () => {
   const [error, setError] = useState("");
 
   const { chatThreadID } = useParams();
+  const { chatThreads, setChatThreads } = useOutletContext<OutletContext>();
 
   useEffect(() => {
-    const getChatHistory = async (chatThreadID: string | undefined) => {
+    const getChatHistory = async () => {
+      if (!chatThreadID) return;
       try {
-        if (chatThreadID) {
-          const response = await axios.get(`/api/chat/${chatThreadID}`);
-          setMessages(response.data.chatHistory);
-        } else {
-          throw Error("Invalid chat to load.");
-        }
+        const response = await axios.get(`/api/chat/${chatThreadID}`);
+        setMessages(response.data.chatHistory);
       } catch (error) {
         console.error(error);
         setError("Could not load chat.");
       }
     };
 
-    if (chatThreadID) getChatHistory(chatThreadID);
+    getChatHistory();
   }, [chatThreadID]);
 
   const onSubmit = async (formData: ChatFormData) => {
@@ -49,6 +52,12 @@ const ChatBot = () => {
       setMessages((prev) => [...prev, userMessage]);
 
       popAudio.play();
+
+      setChatThreads((prev) =>
+        prev.map((thread) =>
+          thread.chatThreadID === chatThreadID && thread.title === "" ? { ...thread, title: formData.prompt } : thread
+        )
+      );
 
       setIsLoading(true);
 
