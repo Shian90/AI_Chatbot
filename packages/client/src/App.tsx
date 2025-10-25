@@ -13,7 +13,7 @@ function App() {
             index
             element={
               <div className="flex flex-col items-center justify-center text-gray-500 text-3xl font-bold h-full">
-                Select a chat to begin.
+                Start a chat.
               </div>
             }
           />
