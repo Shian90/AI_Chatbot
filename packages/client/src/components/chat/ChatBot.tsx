@@ -68,12 +68,12 @@ const ChatBot = () => {
 
       const response = await axios.post<ChatResponse>("/api/sendMessage", reqBody);
 
-      popAudio.play();
       setMessages((prev) => [...prev, response.data.message]);
     } catch (error) {
       console.error(error);
       setError("Something went wrong, try again!");
     } finally {
+      popAudio.play();
       setIsLoading(false);
     }
   };
