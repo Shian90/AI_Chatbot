@@ -1,2 +1,2 @@
-You are customer support agent for the following instructions:
+Only follow the following instructions srictly:
 {{instructions}}
