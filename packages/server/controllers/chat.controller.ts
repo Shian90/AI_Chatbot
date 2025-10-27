@@ -32,7 +32,7 @@ class ChatController {
 
   async getAllchatThreadIDs(req: Request, res: Response) {
     try {
-      const allChatThreads: ChatThread[] = await chatService.getAllchatThreadIDs();
+      const allChatThreads: ChatThread[] = await chatService.getAllChatThreadIDs();
       res.json({ chatThreads: allChatThreads });
     } catch (error) {
       res.status(500).json({ error: "Failed to load chats. " + error });

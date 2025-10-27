@@ -2,6 +2,7 @@
 
 import OpenAI from "openai";
 import { chatHistoryRepository, type ChatMessage, type ChatThread } from "../repositories/chat.repository";
+import { instructionsService } from "./instructions.service";
 
 const client: OpenAI = new OpenAI({
   baseURL: "https://router.huggingface.co/v1",
@@ -9,7 +10,34 @@ const client: OpenAI = new OpenAI({
 });
 
 class ChatService {
+  private instructions: string;
+  private systemChatMessage: ChatMessage;
+
+  constructor() {
+    this.instructions = instructionsService.readInstructions();
+    this.systemChatMessage = {
+      role: "system",
+      content: this.instructions,
+    };
+  }
+
   async sendMessage(chatThreadID: string, prompt: string): Promise<ChatMessage> {
+    if (
+      chatHistoryRepository
+        .getChatHistory(chatThreadID)
+        .find((chatMessage: ChatMessage) => chatMessage.role === "system") === undefined
+    ) {
+      if (this.instructions === "") {
+        this.instructions = instructionsService.readInstructions();
+        this.systemChatMessage = {
+          role: "system",
+          content: this.instructions,
+        };
+      }
+
+      chatHistoryRepository.addChatMessageToHistory(chatThreadID, this.systemChatMessage);
+    }
+
     chatHistoryRepository.addChatMessageToHistory(chatThreadID, {
       role: "user",
       content: prompt,
@@ -31,8 +59,8 @@ class ChatService {
     return modelReplyMessage;
   }
 
-  async getAllchatThreadIDs(): Promise<ChatThread[]> {
-    return await chatHistoryRepository.getAllchatThreadIDs();
+  async getAllChatThreadIDs(): Promise<ChatThread[]> {
+    return await chatHistoryRepository.getAllChatThreadIDs();
   }
 
   async getChatHistory(chatThreadID: string): Promise<ChatMessage[]> {

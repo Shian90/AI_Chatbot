@@ -1,14 +1,15 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import ChatBot from "./components/chat/ChatBot";
-import { Layout } from "./components/Layout";
+import InputFile from "./components/instruction/InputFile";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<ChatBot />} /> */}
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<InputFile />} />
+        <Route path="/chat" element={<Layout />}>
           <Route
             index
             element={

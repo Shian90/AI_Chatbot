@@ -1,5 +1,7 @@
 // Data access code
 
+import { instructionsService } from "../services/instructions.service";
+
 export type ChatMessage = {
   response_id?: string;
   role: "system" | "user" | "assistant";
@@ -12,12 +14,17 @@ export type ChatThread = {
 };
 
 const MAX_HISTORY = 20;
-let chatThreadToHistory = new Map<string, ChatMessage[]>();
 
 class ChatHistoryRepository {
-  getAllchatThreadIDs(): ChatThread[] {
+  private chatThreadToHistory: Map<string, ChatMessage[]>;
+
+  constructor() {
+    this.chatThreadToHistory = new Map<string, ChatMessage[]>();
+  }
+
+  getAllChatThreadIDs(): ChatThread[] {
     const chatThreads: ChatThread[] = [];
-    chatThreadToHistory.forEach((messages: ChatMessage[], chatThreadID: string) => {
+    this.chatThreadToHistory.forEach((messages: ChatMessage[], chatThreadID: string) => {
       chatThreads.push({ chatThreadID: chatThreadID, title: messages[0]?.content.trim().replace(".", "") ?? "" });
     });
 
@@ -25,14 +32,14 @@ class ChatHistoryRepository {
   }
 
   getChatHistory(chatThreadID: string): ChatMessage[] {
-    let chatHistory: ChatMessage[] | undefined = chatThreadToHistory.get(chatThreadID);
+    let chatHistory: ChatMessage[] | undefined = this.chatThreadToHistory.get(chatThreadID);
 
     if (!chatHistory) {
       const isEmptyHistoryExists =
-        chatThreadToHistory.values().find((chatHistory: ChatMessage[]) => chatHistory.length == 0) !== undefined;
+        this.chatThreadToHistory.values().find((chatHistory: ChatMessage[]) => chatHistory.length == 0) !== undefined;
       chatHistory = [];
       if (!isEmptyHistoryExists) {
-        chatThreadToHistory.set(chatThreadID, chatHistory);
+        this.chatThreadToHistory.set(chatThreadID, chatHistory);
       }
     }
 

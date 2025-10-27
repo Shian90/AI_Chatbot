@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Sidebar, { type ChatThread } from "./chat/Sidebar";
 import { useState } from "react";
 
-export const Layout = () => {
+const Layout = () => {
   const [chatThreads, setChatThreads] = useState<ChatThread[]>([]);
 
   return (
@@ -14,3 +14,5 @@ export const Layout = () => {
     </div>
   );
 };
+
+export default Layout;

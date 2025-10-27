@@ -66,7 +66,7 @@ const ChatBot = () => {
         chatThreadID: chatThreadID,
       };
 
-      const response = await axios.post<ChatResponse>("/api/sendMessage", reqBody);
+      const response = await axios.post<ChatResponse>("/api/chat/sendMessage", reqBody);
 
       setMessages((prev) => [...prev, response.data.message]);
     } catch (error) {
