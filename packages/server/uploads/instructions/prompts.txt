@@ -1,4 +1,2 @@
 You are customer support agent for the following instructions:
 {{instructions}}
-
-Always answer in cheerful tone.

@@ -34,8 +34,9 @@ const InputFile = () => {
 
   return (
     <div className="h-screen flex flex-col gap-4 items-center justify-center">
-      <h2 className="text-message-color font-bold text-xl">
-        Set optional custom rules to shape your chatbot’s personality
+      <h1 className="text-control-color font-bold text-4xl">EchoAI</h1>
+      <h2 className="text-message-color font-bold text-2xl">
+        Provide custom rules to shape your chatbot’s personality (optional)
       </h2>
       <input
         accept=".md"
