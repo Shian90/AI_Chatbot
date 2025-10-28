@@ -1,17 +1,15 @@
 # AI_Chatbot
 
 Here is an image of how it looks like:
+![LandingPage](assets/LandingPage.png)
 ![Image](assets/Image.png)
 
 Check out a quick demo of the AI chatbot in action:
 [Watch the demo video](https://vimeo.com/1130986268?share=copy&fl=sv&fe=ci#t=0)
 
-<video src="https://vimeo.com/1130986268?share=copy&fl=sv&fe=ci#t=0" controls width="600"></video>
-
 Customize your chatbot with your own policy to turn it into a dedicated customer assistant.
 Watch the demo video below to see it in action:
-
-<video src="https://player.vimeo.com/video/1131423195?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" controls width="600"></video>
+[Watch how to personalize your chatbot](https://vimeo.com/1131423195?share=copy&fl=sv&fe=ci#t=0)
 
 To install dependencies:
 
