@@ -1,9 +1,6 @@
 // Data access code
 
-import { instructionsService } from "../services/instructions.service";
-
 export type ChatMessage = {
-  response_id?: string;
   role: "system" | "user" | "assistant";
   content: string;
 };

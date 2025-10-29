@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
 export type ChatMessage = {
-  response_id?: string;
   role: "system" | "user" | "assistant";
   content: string;
 };

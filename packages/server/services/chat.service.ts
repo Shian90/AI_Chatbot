@@ -44,12 +44,13 @@ class ChatService {
     });
 
     const response: OpenAI.Chat.Completions.ChatCompletion = await client.chat.completions.create({
-      model: "google/gemma-2-2b-it",
+      model: "openai/gpt-oss-120b",
       messages: chatHistoryRepository.getChatHistory(chatThreadID),
     });
 
+    console.log(response);
+    console.log(response.choices[0]?.message);
     const modelReplyMessage: ChatMessage = {
-      response_id: response.id,
       role: response.choices[0]?.message.role ?? "assistant",
       content: response.choices[0]?.message.content ?? "",
     };
