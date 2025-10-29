@@ -48,8 +48,6 @@ class ChatService {
       messages: chatHistoryRepository.getChatHistory(chatThreadID),
     });
 
-    console.log(response);
-    console.log(response.choices[0]?.message);
     const modelReplyMessage: ChatMessage = {
       role: response.choices[0]?.message.role ?? "assistant",
       content: response.choices[0]?.message.content ?? "",
