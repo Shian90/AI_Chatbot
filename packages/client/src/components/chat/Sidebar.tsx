@@ -50,10 +50,10 @@ const Sidebar = ({ chatThreads, setChatThreads }: SidebarProps) => {
         onClick={() => {
           onClick(crypto.randomUUID(), true);
         }}
-        className="hover:bg-control-hover-color bg-control-color text-md text-background my-2">
+        className="hover:bg-control-hover-color bg-control-color text-md text-background mt-2">
         + New Chat
       </Button>
-      <hr className="border-assistant-message border-1"></hr>
+      <hr className="border-b-border"></hr>
 
       {chatThreads.map((chatThread: ChatThread) => {
         const isActive = chatThreadID === chatThread.chatThreadID;

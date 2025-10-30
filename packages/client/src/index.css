@@ -9,7 +9,8 @@
   --foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(50.504% 0.00251 15.982 / 0.58);
+  --border: oklch(50.504% 0.00251 15.982 / 0.32);
+  --border-dark: oklch(50.504% 0.00251 15.982 / 0.639);
   --ring: oklch(0.708 0 0);
   --sidebar-primary: oklch(25.585% 0.03713 261.767);
   --select-item: oklch(44.605% 0.01303 291.536 / 0.495);
@@ -39,8 +40,8 @@
   --tw-prose-code: var(--message-color);
   --tw-prose-pre-code: var(--message-color);
   --tw-prose-pre-bg: var(--assistant-message);
-  --tw-prose-th-borders: var(--border);
-  --tw-prose-td-borders: var(--border);
+  --tw-prose-th-borders: var(--border-dark);
+  --tw-prose-td-borders: var(--border-dark);
   --tw-prose-invert-body: var(--color-pink-200);
   --tw-prose-invert-headings: var(--color-white);
   --tw-prose-invert-lead: var(--color-pink-300);

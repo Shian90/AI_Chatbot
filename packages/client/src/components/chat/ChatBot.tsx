@@ -80,10 +80,10 @@ const ChatBot = () => {
 
   return (
     <div className="flex h-full">
-      <div className="w-px h-full bg-assistant-message"></div>
+      <div className="w-px h-full bg-border" />
       <div className="flex-1 flex flex-col h-full">
         <h1 className="text-xl text-message-color m-4">EchoAI</h1>
-        <hr className="border-b-border"></hr>
+        <hr className="border-b-border mb-2"></hr>
         <div className="flex-1 flex flex-col gap-5 px-2 w-full items-center overflow-y-auto custom-scroll">
           <div className="flex flex-col gap-5 w-[60%]">
             <ChatMessages messages={messages} />
